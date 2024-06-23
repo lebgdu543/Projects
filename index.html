@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Fight</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.50.1/dist/phaser.min.js"></script>
+</head>
+<body>
+    <div id="game"></div>
+    <script>
+        // Create a new Phaser game
+        var config = {
+            type: Phaser.CANVAS,
+            width: 800,
+            height: 600,
+            parent: 'game',
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+    function preload() {
+            // Load the player images
+            this.load.image('player1', 'player1.png');
+            this.load.image('player2', 'player2.png');
+        }
+
+        function create() {
+            // Create the players
+            this.player1 = this.add.sprite(100, 100, 'player1');
+            this.player2 = this.add.sprite(700, 100, 'player2');
+
+            // Set the players' health
+            this.player1.health = 100;
+            this.player2.health = 100;
+
+            // Create the health bars
+            this.healthBar1 = this.add.graphics(0, 0);
+            this.healthBar1.lineStyle(10, 0xff0000, 1);
+            this.healthBar1.moveTo(10, 20);
+            this.healthBar1.lineTo(110, 20);
+
+            this.healthBar2 = this.add.graphics(0, 0);
+            this.healthBar2.lineStyle(10, 0xff0000, 1);
+            this.healthBar2.moveTo(690, 20);
+            this.healthBar2.lineTo(790, 20);
+
+            // Set the players' input
+            this.cursor = this.input.keyboard.createCursorKeys();
+            this.wasdKeys = {
+                up: this.input.keyboard.addKey(Phaser.Keyboard.W),
+                down: this.input.keyboard.addKey(Phaser.Keyboard.S),
+                left: this.input.keyboard.addKey(Phaser.Keyboard.A),
+                right: this.input.keyboard.addKey(Phaser.Keyboard.D)
+            };
+
+            // Set the game's physics engine
+            this.physics.startSystem(Phaser.Physics.ARCADE);
+            this.physics.arcade.enable(this.player1);
+            this.physics.arcade.enable(this.player2);
+
+            // Set the players' boundaries
+            this.player1.body.collideWorldBounds = true;
+            this.player2.body.collideWorldBounds = true;
+
+            // Add a timer to the game
+            this.timer = this.time.events.loop(1000, this.updateTimer, this);
+
+            // Add a score counter
+            this.score1 = 0;
+            this.score2 = 0;
+            this.scoreText = this.add.text(10, 10, 'Score: 0 - 0', { fontSize: 24, fill: '#ffffff' });
+        }
+
+        function update() {
+            // Move the players
+            if (this.cursor.left.isDown) {
+                this.player1.body.velocity.x = -200;
+            } else if (this.cursor.right.isDown) {
+                this.player1.body.velocity.x = 200;
+            } else {
+                this.player1.body.velocity.x = 0;
+            }
+
+            if (this.cursor.up.isDown) {
+                this.player1.body.velocity.y = -200;
+            } else if (this.cursor.down.isDown) {
+                this.player1.body.velocity.y = 200;
+            } else {
+                this.player1.body.velocity.y = 0;
+            }
+
+            if (this.wasdKeys.left.isDown) {
+                this.player2.body.velocity.x = -200;
+            } else if (this.wasdKeys.right.isDown) {
+                this.player2.body.velocity.x = 200;
+            } else {
+                this.player2.body.velocity.x = 0;
+            }
+
+            if (this.wasdKeys.up.isDown) {
+                this.player2.body.velocity.y = -200;
+            } else if (this.wasdKeys.down.isDown) {
+                this.player2.body.velocity.y = 200;
+            } else {
+                this.player2.body.velocity.y = 0;
+            }
+
+            // Check for collision
+            this.physics.arcade.collide(this.player1, this.player2, this.onCollision, null, this);
+
+            // Check for game over
+            if (this.player1.health <= 0) {
+                this.gameOver('Player 2 wins!');
+            } else if (this.player2.health <= 0) {
+                this.gameOver('Player 1 wins!');
+            }
+        }
+
+        function onCollision(player1, player2) {
+            player1.health -= 10;
+            player2.health -= 10;
+
+            // Update the health bars
+            this.updateHealthBar(this.healthBar1, player1.health);
+            this.updateHealthBar(this.healthBar2, player2.health);
+
+            // Update the score
+            this.score1++;
+            this.score2++;
+            this.scoreText.text = 'Score: ' + this.score1 + ' - ' + this.score2;
+        }
+
+        function updateHealthBar(healthBar, health) {
+            healthBar.clear();
+            healthBar.lineStyle(10, 0xff0000, 1);
+            healthBar.moveTo(10, 20);
+            healthBar.lineTo(10 + health, 20);
+        }
+
+        function gameOver(message) {
+            this.add.text(this.world.centerX, this.world.centerY, message, { fontSize: 48, fill: '#ffffff' });
+            this.input.enabled = false;
+        }
+
+
+        function updateTimer() {
+            // Update the timer here
+        }
+
+        // Add a user gesture event listener to initialize audio
+        document.addEventListener('click', function() {
+            game.sound.context.resume();
+        });
+
+        // Create the game states
+        game.state.add('play', playState);
+
+        // Start the game
+        game.state.start('play');
+
+    </script>
+</body>
