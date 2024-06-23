@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <div>
+        <h1>Player 1: <span id="player1-score">0</span></h1>
+        <button id="player1-rock">Rock</button>
+        <button id="player1-paper">Paper</button>
+        <button id="player1-scissors">Scissors</button>
+    </div>
+
+    <div>
+        <h1>Player 2: <span id="player2-score">0</span></h1>
+        <button id="player2-rock">Rock</button>
+        <button id="player2-paper">Paper</button>
+        <button id="player2-scissors">Scissors</button>
+    </div>
+
+    <button id="reset-btn">Reset Game</button>
+
+    <div id="game-status"></div>
+
+    <select id="game-mode">
+        <option value="score">Score Mode</option>
+        <option value="rock-paper-scissors">Rock, Paper, Scissors</option>
+    </select>
+
+    <label for="best-of">Best of:</label>
+    <select id="best-of">
+        <option value="1">1</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+    </select>
+
+
+    <script>
+        let player1Score = 0;
+        let player2Score = 0;
+        let currentPlayer = 1;
+        let gameOver = false;
+        let gameMode = 'score'; // default game mode
+        let bestOf = 1; // default best of
+
+        document.getElementById('player1-rock').addEventListener('click', () => {
+        playRound('rock');
+        });
+
+        document.getElementById('player1-paper').addEventListener('click', () => {
+        playRound('paper');
+        });
+
+        document.getElementById('player1-scissors').addEventListener('click', () => {
+        playRound('scissors');
+        });
+
+        document.getElementById('player2-rock').addEventListener('click', () => {
+        playRound('rock');
+        });
+
+        document.getElementById('player2-paper').addEventListener('click', () => {
+        playRound('paper');
+        });
+
+        document.getElementById('player2-scissors').addEventListener('click', () => {
+        playRound('scissors');
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
+        player1Score = 0;
+        player2Score = 0;
+        currentPlayer = 1;
+        gameOver = false;
+        document.getElementById('player1-score').innerText = player1Score;
+        document.getElementById('player2-score').innerText = player2Score;
+        document.getElementById('game-status').innerText = '';
+        });
+
+        document.getElementById('game-mode').addEventListener('change', () => {
+        gameMode = document.getElementById('game-mode').value;
+        if (gameMode === 'rock-paper-scissors') {
+            document.getElementById('player1-btn').style.display = 'none';
+            document.getElementById('player2-btn').style.display = 'none';
+            document.getElementById('player1-rock').style.display = 'inline-block';
+            document.getElementById('player1-paper').style.display = 'inline-block';
+            document.getElementById('player1-scissors').style.display = 'inline-block';
+            document.getElementById('player2-rock').style.display = 'inline-block';
+            document.getElementById('player2-paper').style.display = 'inline-block';
+            document.getElementById('player2-scissors').style.display = 'inline-block';
+        } else {
+            document.getElementById('player1-btn').style.display = 'inline-block';
+            document.getElementById('player2-btn').style.display = 'inline-block';
+            document.getElementById('player1-rock').style.display = 'none';
+            document.getElementById('player1-paper').style.display = 'none';
+            document.getElementById('player1-scissors').style.display = 'none';
+            document.getElementById('player2-rock').style.display = 'none';
+            document.getElementById('player2-paper').style.display = 'none';
+            document.getElementById('player2-scissors').style.display = 'none';
+        }
+        });
+
+        document.getElementById('best-of').addEventListener('change', () => {
+        bestOf = parseInt(document.getElementById('best-of').value);
+        });
+
+        function playRound(playerChoice) {
+        if (!gameOver) {
+            let computerChoice = getComputerChoice();
+            let result = determineWinner(playerChoice, computerChoice);
+            if (result === 'win') {
+            if (currentPlayer === 1) {
+                player1Score++;
+                document.getElementById('player1-score').innerText = player1Score;
+            } else {
+                player2Score++;
+                document.getElementById('player2-score').innerText = player2Score;
+            }
+            } else if (result === 'lose') {
+            if (currentPlayer === 1) {
+                player2Score++;
+                document.getElementById('player2-score').innerText = player2Score;
+            } else {
+                player1Score++;
+                document.getElementById('player1-score').innerText = player1Score;
+            }
+            }
+            currentPlayer = 3 - currentPlayer; // switch player
+            document.getElementById('game-status').innerText = `You chose ${playerChoice}, computer chose ${computerChoice}. ${result === 'win' ? 'You win!' : result === 'lose' ? 'You lose!' : 'It\'s a tie!'}`;
+            checkGameOver();
+        }
+        }
+
+        function getComputerChoice() {
+        let choices = ['rock', 'paper', 'scissors'];
+        return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        function determineWinner(playerChoice, computerChoice) {
+        if (playerChoice === computerChoice) {
+            return 'tie';
+        } else if ((playerChoice === 'rock' && computerChoice === 'scissors') ||
+                    (playerChoice === 'paper' && computerChoice === 'rock') ||
+                    (playerChoice === 'scissors' && computerChoice === 'paper')) {
+            return 'win';
+        } else {
+            return 'lose';
+        }
+        }
+
+        function checkGameOver() {
+        if (player1Score >= bestOf || player2Score >= bestOf) {
+            gameOver = true;
+            document.getElementById('game-status').innerText += ` Game over! ${player1Score > player2Score ? 'Player 1 wins!' : 'Player 2 wins!'}`;
+        }
+        }
+
+
+    </script>
+</body>
