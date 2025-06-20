@@ -1,0 +1,26 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+textarea {
+    display: block;
+    margin: auto;
+    width: auto;
+    height: 180px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+button, input {
+    margin-left: 46%;
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50px;
+}
+h1, h2, p {
+    text-align: center;
+}

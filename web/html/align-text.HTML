@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aligner le texte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aligner le texte</h1>
+    <p>Saisissez votre texte ci-dessous :</p>
+    <textarea id="inputText"></textarea>
+    <button onclick="alignText()">Aligner</button>
+    <h2>Texte aligné :</h2>
+    <div id="alignedText"></div>
+    <script>
+        function alignText() {
+            var inputText = document.getElementById("inputText").value;
+            var lines = inputText.split("\n");
+            lines.sort(function(a, b) {
+                return b.length - a.length;
+            });
+            var alignedText = lines.join("\n");
+            document.getElementById("alignedText").innerText = alignedText;
+        }
+    </script>
+</body>
+</html>

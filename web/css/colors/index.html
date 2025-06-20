@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colors</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="left-square square">
+            <div class="left-large large-circle"></div>
+            <div class="left-small small-circle"></div>
+        </div>
+        <div class="right-square square">
+            <div class="right-large large-circle"></div>
+            <div class="right-small small-circle"></div>
+        </div>
+    </div>
+</body>
+<style>
+body {
+    background: #37212D;
+    margin: 0;
+}
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.square {
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+}
+
+.left-square {
+    background: #7660BA;
+}
+
+.right-square {
+    background: #EE9B99;
+}
+
+.small-circle {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+.large-circle {
+    position: absolute;
+    height: 200%;
+    width: 200%;
+    border-radius: 100%;
+}
+
+.left-small {
+    background: #BCE6E9;
+    translate: 0 50%;
+}
+
+.right-small {
+    background: #7660BA;
+    translate: -50%;
+}
+
+.left-large {
+    background: #EE9B99;
+}
+
+.right-large {
+    background: #BCE6E9;
+    translate: -50%;
+}
+</style>
+</html>

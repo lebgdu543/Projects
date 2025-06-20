@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+    border-radius: 1rem;
+  }
+  
+  body {
+    font-family: Arial;
+    padding: 20px;
+    background: #202324;
+    color: white;
+  }
+  
+  /* Header/Blog Title */
+  .header {
+    padding: 1px;
+    font-size: 40px;
+    text-align: center;
+    background: #181a1b;
+    cursor: default;
+  }
+  
+  .leftcolumn {
+    float: left;
+    width: 75%;
+    font-family: ubuntu,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .rightcolumn {
+    float: left;
+    font-family: ubuntu,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 25%;
+    padding-left: 20px;
+  }
+  
+  .card {
+    background-color: #181a1b;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    transition: transform .3s ease-in-out;
+  }
+  
+  .card:hover {
+    cursor: pointer;
+    transform: scale(1.02, 1.03);
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .row a {
+    color: white;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 2px;
+    font-family: ubuntu,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background: #181a1b;
+    margin-top: 20px;
+    cursor: default;
+  }
+  
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {
+      width: 100%;
+      padding: 0;
+    }
+  }
+  #mname {
+    color: #87d17f;
+  }
+
+  #hrt {
+    color: tomato;
+  }
+  
+  #link {
+    color: #3085e8;
+  }
+
+  #link:hover {
+    text-decoration: underline;
+  }
+
+  #date {
+    color: #87d17f;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  #abme h2 {
+    color: white;
+    font-family: Courier, monospace, sans-serif;
+    font-weight: bolder;
+  }
+  
+  #abme p {
+    color: rgba(255, 255, 255, 0.911);
+    word-spacing: 1.18px;
+    line-height: 27px;
+    font-family: Courier, monospace, sans-serif;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #3085e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    }
+  
+  #page1:hover {
+    mix-blend-mode: difference;
+  }
+
+  #page2:hover {
+    mix-blend-mode: difference;
+  }
